@@ -43,6 +43,19 @@ const char* ssid = "CAMPUS_SECURED"; // Eduroam SSID
              y+=filter[q]*x[q];
       return String(y);
          }
+
+       String sinwave(){
+          
+            k=sin(6.28*50*m);
+            m+=dt;
+        
+            //Serial.println(k);
+            delay(50);
+            if(m>10) m=0;
+
+            return String(k);
+          
+       }
   
   
   void setup(){
@@ -83,9 +96,12 @@ const char* ssid = "CAMPUS_SECURED"; // Eduroam SSID
 
       
         server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
-          request->send(SPIFFS, "/index.html", filtering().c_str());
+          request->send(SPIFFS, "/index.html");
         });
-        server.on("/temperature", HTTP_GET, [](AsyncWebServerRequest *request){
+        server.on("/input", HTTP_GET, [](AsyncWebServerRequest *request){
+          request->send_P(200, "text/plain", sinwave().c_str());
+        });
+        server.on("/output", HTTP_GET, [](AsyncWebServerRequest *request){
           request->send_P(200, "text/plain", filtering().c_str());
         });
       
@@ -93,13 +109,7 @@ const char* ssid = "CAMPUS_SECURED"; // Eduroam SSID
 }
  
 void loop(){
-
-    k=sin(6.28*50*m);
-    m+=dt;
-
-    Serial.println(k);
-    delay(50);
-    if(m>10) m=0;
+    sinwave();
     filtering();
     shift();
   
