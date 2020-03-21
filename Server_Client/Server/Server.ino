@@ -33,9 +33,7 @@ void setup(){
   server.on("/pressure", HTTP_GET, [](AsyncWebServerRequest *request){
     request->send_P(200, "text/plain", Send_data().c_str());
   });
-  
 
-  // Start server
   server.begin();
 }
  

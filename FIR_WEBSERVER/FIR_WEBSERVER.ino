@@ -1,6 +1,6 @@
  //the following code is for FIR filter whose output will be shown on webserver
-  
-  
+ //The filter used is a LOW pass filter whose coefficients are generated from matlab
+ //Muralikarthik
   
   #include <Arduino.h>
   #include <WiFi.h>
